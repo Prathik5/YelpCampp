@@ -8,7 +8,7 @@ To run YelpCamp locally, follow these steps:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/yelpcamp.git
+git clone https://github.com/Prathik5/YelpCampp.git
 ```
 
 2. Install the dependencies using the following command:
