@@ -1,0 +1,67 @@
+<% layout('layouts/boilerPlate') %>
+
+<div class="row">
+  <h1 class="text-center">Create a new campground</h1>
+  <div class="col-6 offset-3">
+    <form action="/campGround" method="POST">
+      <div class="my-2">
+        <label class="form-label" for="title">Enter Title</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[title]"
+          id="title"
+          placeholder="Enter the title"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="price">Price</label>
+        <div class="input-group">
+          <span class="input-group-text" id="price-label">&#8377;</span>
+          <input
+            aria-describedby="price-label"
+            class="form-control"
+            type="number"
+            name="campground[price]"
+            id="price"
+            placeholder="0"
+          />
+        </div>
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="location">Enter Location</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[location]"
+          id="location"
+          placeholder="Enter the location"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="image">Image URL</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[image]"
+          id="image"
+          placeholder="Enter the URL"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          type="text"
+          name="campground[description]"
+          id="description"
+          placeholder="Enter description"
+        ></textarea>
+      </div>
+      <div>
+        <button class="btn btn-success my-2">Submit</button>
+      </div>
+    </form>
+    <a href="/campGround">Back to home</a>
+  </div>
+</div>

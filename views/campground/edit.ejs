@@ -1,0 +1,104 @@
+<!-- <% layout('layouts/boilerPlate') %>
+<h1>Edit campground</h1>
+
+<form action="/campGround/<%= campground._id %>?_method=PUT" method="POST">
+  <div>
+    <label for="title">Enter Title</label>
+    <input
+      type="text"
+      name="campground[title]"
+      id="title"
+      placeholder="Enter the title"
+      value="<%= campground.title %>"
+    />
+  </div>
+  <div>
+    <label for="location">Enter Location</label>
+    <input
+      type="text"
+      name="campground[location]"
+      id="location"
+      placeholder="Enter the location"
+      value="<%= campground.location %>"
+    />
+  </div>
+  <button>Edit</button>
+</form>
+<a href="/campGround/<%= campground._id %>">Back to ShowPage</a>
+
+
+ -->
+
+<% layout('layouts/boilerPlate') %>
+
+<div class="row">
+  <h1 class="text-center">Edit your campground</h1>
+  <div class="col-6 offset-3">
+    <form action="/campGround/<%= campground._id %>?_method=PUT" method="POST">
+      <div class="my-2">
+        <label class="form-label" for="title">Enter Title</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[title]"
+          id="title"
+          placeholder="Enter the title"
+          value="<%= campground.title %>"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="price">Price</label>
+        <div class="input-group">
+          <span class="input-group-text" id="price-label">&#8377;</span>
+          <input
+            aria-describedby="price-label"
+            class="form-control"
+            type="number"
+            name="campground[price]"
+            id="price"
+            placeholder="0"
+            value="<%= campground.price %>"
+          />
+        </div>
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="location">Enter Location</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[location]"
+          id="location"
+          placeholder="Enter the location"
+          value="<%= campground.location %>"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="image">Image URL</label>
+        <input
+          class="form-control"
+          type="text"
+          name="campground[image]"
+          id="image"
+          placeholder="Enter the URL"
+          value="<%= campground.image %>"
+        />
+      </div>
+      <div class="my-2">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          type="text"
+          name="campground[description]"
+          id="description"
+          placeholder="Enter description"
+        >
+<%= campground.description %></textarea
+        >
+      </div>
+      <div>
+        <button class="btn btn-success my-2">Update</button>
+      </div>
+    </form>
+    <a href="/campGround/<%= campground._id %>" class="btn">Back to ShowPage</a>
+  </div>
+</div>
