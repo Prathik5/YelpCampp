@@ -53,6 +53,8 @@ const words = [
   "hills",
   "india",
   "scenery",
+  "panda",
+  "random",
   "travel",
   "outdoor",
   "garden",
@@ -63,7 +65,6 @@ const words = [
   "deserts",
   "rainforests",
   "rains",
-  "Antarica",
   "waterfalls",
 ];
 exports.words = words;

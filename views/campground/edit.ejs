@@ -1,40 +1,14 @@
-<!-- <% layout('layouts/boilerPlate') %>
-<h1>Edit campground</h1>
-
-<form action="/campGround/<%= campground._id %>?_method=PUT" method="POST">
-  <div>
-    <label for="title">Enter Title</label>
-    <input
-      type="text"
-      name="campground[title]"
-      id="title"
-      placeholder="Enter the title"
-      value="<%= campground.title %>"
-    />
-  </div>
-  <div>
-    <label for="location">Enter Location</label>
-    <input
-      type="text"
-      name="campground[location]"
-      id="location"
-      placeholder="Enter the location"
-      value="<%= campground.location %>"
-    />
-  </div>
-  <button>Edit</button>
-</form>
-<a href="/campGround/<%= campground._id %>">Back to ShowPage</a>
-
-
- -->
-
 <% layout('layouts/boilerPlate') %>
 
 <div class="row">
   <h1 class="text-center">Edit your campground</h1>
   <div class="col-6 offset-3">
-    <form action="/campGround/<%= campground._id %>?_method=PUT" method="POST">
+    <form
+      action="/campGround/<%= campground._id %>?_method=PUT"
+      method="POST"
+      novalidate
+      class="validation-form"
+    >
       <div class="my-2">
         <label class="form-label" for="title">Enter Title</label>
         <input
@@ -44,7 +18,9 @@
           id="title"
           placeholder="Enter the title"
           value="<%= campground.title %>"
+          required
         />
+        <div class="valid-feedback">Looks Good!!</div>
       </div>
       <div class="my-2">
         <label class="form-label" for="price">Price</label>
@@ -58,7 +34,9 @@
             id="price"
             placeholder="0"
             value="<%= campground.price %>"
+            required
           />
+          <div class="valid-feedback">Looks Good!!</div>
         </div>
       </div>
       <div class="my-2">
@@ -70,7 +48,9 @@
           id="location"
           placeholder="Enter the location"
           value="<%= campground.location %>"
+          required
         />
+        <div class="valid-feedback">Looks Good!!</div>
       </div>
       <div class="my-2">
         <label class="form-label" for="image">Image URL</label>
@@ -81,7 +61,9 @@
           id="image"
           placeholder="Enter the URL"
           value="<%= campground.image %>"
+          required
         />
+        <div class="valid-feedback">Looks Good!!</div>
       </div>
       <div class="my-2">
         <label class="form-label" for="description">Description</label>
@@ -91,9 +73,11 @@
           name="campground[description]"
           id="description"
           placeholder="Enter description"
+          required
         >
 <%= campground.description %></textarea
         >
+        <div class="valid-feedback">Looks Good!!</div>
       </div>
       <div>
         <button class="btn btn-success my-2">Update</button>

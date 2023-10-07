@@ -17,8 +17,7 @@ const seedDB = async () => {
   await CampGround.deleteMany({});
   for (let i = 0; i < 50; i++) {
     const word = words[Math.floor(Math.random() * words.length)];
-    console.log(word);
-    const random1000 = Math.floor(Math.random() * 1000);
+    const random1000 = Math.floor(Math.random() * 150);
     const price = Math.floor(Math.random() * 20) + 1000;
     const camp = new CampGround({
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
@@ -28,6 +27,7 @@ const seedDB = async () => {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, aut at numquam omnis nihil in, esse adipisci labore ex distinctio suscipit provident porro architecto! Et maiores ex cumque ea. Ea!",
       price,
     });
+    console.log(camp);
     await camp.save();
   }
 };
