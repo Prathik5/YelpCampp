@@ -7,7 +7,8 @@ const CampGround = require("./models/campGround");
 const methodOverride = require("method-override");
 const catchAsync = require("./utils/catchAsync");
 const expressErrors = require("./utils/expressErrors");
-const campgroundSchema = require("./schemas");
+const { campgroundSchema, reviewSchema } = require("./schemas");
+const Review = require("./models/review");
 
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/yelpCamp");
@@ -25,6 +26,16 @@ app.use(methodOverride("_method"));
 
 const validateCampground = (req, res, next) => {
   const { error } = campgroundSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((info) => info.message).join(",");
+    throw new expressErrors(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((info) => info.message).join(",");
     throw new expressErrors(msg, 400);
@@ -63,7 +74,8 @@ app.get(
   "/campGround/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await CampGround.findById(id);
+    const campground = await CampGround.findById(id).populate("reviews");
+    console.log(campground);
     res.render("campground/show", { campground });
   })
 );
@@ -98,12 +110,34 @@ app.delete(
   })
 );
 
-app.use((err, req, res, next) => {
-  res.send("Oh No!!Something went wrong");
-});
+app.post(
+  "/campGround/:id/reviews",
+  catchAsync(async (req, res, next) => {
+    const campground = await CampGround.findById(req.params.id);
+    const review = await Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campGround/${campground._id}`);
+  })
+);
+
+app.delete(
+  "/campGround/:id/review/:reviewId",
+  catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await CampGround.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campGround/${id}`);
+  })
+);
 
 app.all("*", (req, res, next) => {
   next(new expressErrors("Page Not Found", 404));
+});
+
+app.use((err, req, res, next) => {
+  res.send("Oh No!!Something went wrong");
 });
 
 app.use((err, req, res, next) => {

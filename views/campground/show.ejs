@@ -1,8 +1,8 @@
 <% layout('layouts/boilerPlate') %>
 
 <div class="row">
-  <div class="col offset-3">
-    <div class="card my-2" style="width: 25rem">
+  <div class="col-6">
+    <div class="card mb-2 my-2" style="width: 25rem">
       <img src="<%= campground.image %>" alt="" />
       <div class="card-body">
         <h5 class="card-title"><%= campground.title %></h5>
@@ -28,13 +28,55 @@
       </div>
     </div>
   </div>
+  <div class="col-6 mb-2">
+    <h2>Leave a review</h2>
+    <form
+      action="/campGround/<%= campground.id %>/reviews"
+      method="POST"
+      novalidate
+      class="validation-form"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="rating">Rating</label>
+        <input
+          type="range"
+          class="form-range"
+          min="1"
+          max="10"
+          name="review[rating]"
+          id="rating"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="body">Review</label>
+        <textarea
+          class="form-control"
+          name="review[body]"
+          id="body"
+          cols="30"
+          rows="3"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks great!</div>
+      </div>
+      <button class="my-2 btn btn-success">Submit</button>
+    </form>
+    <div class="mb-3">
+      <h3>Reviews</h3>
+      <% for(let review of campground.reviews){ %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Rating: <%= review.rating %></h5>
+          <p class="card-text">Review: <%= review.body %></p>
+          <form
+            action="/campGround/<%= campground.id %>/review/<%= review.id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
 </div>
-
-<!-- <h1></h1>
-<div></div>
-<p>
-  <a href="">Edit</a>
-</p>
-
-
-<a href="/campGround">Back to home</a> -->
