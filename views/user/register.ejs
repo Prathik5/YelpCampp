@@ -1,0 +1,44 @@
+<% layout('layouts/boilerPlate') %>
+
+<h1>Sign Up</h1>
+<form action="/register" method="post" novalidate class="validation-form">
+  <div class="my-2">
+    <label class="form-label" for="username">Enter Username</label>
+    <input
+      class="form-control"
+      type="text"
+      name="username"
+      id="username"
+      placeholder="Username"
+      required
+    />
+    <div class="valid-feedback">Looks Good!!</div>
+  </div>
+  <div class="my-2">
+    <label class="form-label" for="email">Enter Email</label>
+    <input
+      class="form-control"
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Email"
+      required
+    />
+    <div class="valid-feedback">Looks Good!!</div>
+  </div>
+  <div class="my-2">
+    <label class="form-label" for="password">Enter Password</label>
+    <input
+      class="form-control"
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Password"
+      required
+    />
+    <div class="valid-feedback">Looks Good!!</div>
+  </div>
+  <div>
+    <button class="btn btn-success my-2">Submit</button>
+  </div>
+</form>

@@ -37,6 +37,7 @@ router.delete(
     await CampGround.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
     req.flash("success", "Successfully deleted review");
+    req.flash("error", "Something went wrong");
     res.redirect(`/campGround/${id}`);
   })
 );
