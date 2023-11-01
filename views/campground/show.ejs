@@ -10,8 +10,12 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><%= campground.location %></li>
+        <li class="list-group-item">
+          Submitted by <%= campground.author.username %>
+        </li>
         <li class="list-group-item">&#8377;<%= campground.price %>/night</li>
       </ul>
+      <% if(currentUser && campground.author.equals(currentUser)) {%>
       <div class="card-body">
         <a
           href="/campGround/<%= campground._id %>/edit"
@@ -26,10 +30,14 @@
           <button class="btn btn-danger">Delete</button>
         </form>
       </div>
+      <% } %>
     </div>
   </div>
+
+  <!-- Review Side starts here lol -->
   <div class="col-6 mb-2">
-    <h2>Leave a review</h2>
+    <h2>Ratings and reviews</h2>
+    <% if(currentUser){ %>
     <form
       action="/campGround/<%= campground.id %>/reviews"
       method="POST"
@@ -61,19 +69,25 @@
       </div>
       <button class="my-2 btn btn-success">Submit</button>
     </form>
+    <% } %>
     <div class="mb-3">
       <h3>Reviews</h3>
       <% for(let review of campground.reviews){ %>
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Rating: <%= review.rating %></h5>
+          <h5 class="card-subtitle mb-2 text-muted">
+            By: <%= (review.author.username).toLowerCase() %>
+          </h5>
           <p class="card-text">Review: <%= review.body %></p>
+          <% if(currentUser && review.author.equals(currentUser)) {%>
           <form
             action="/campGround/<%= campground.id %>/review/<%= review.id %>?_method=DELETE"
             method="POST"
           >
             <button class="btn btn-sm btn-danger">Delete</button>
           </form>
+          <% } %>
         </div>
       </div>
       <% } %>

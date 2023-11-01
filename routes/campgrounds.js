@@ -2,19 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { campgroundSchema } = require("../schemas");
 const catchAsync = require("../utils/catchAsync");
-const expressErrors = require("../utils/expressErrors");
 const CampGround = require("../models/campGround");
-const { isLoggedIn } = require("../middleware");
-
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((info) => info.message).join(",");
-    throw new expressErrors(msg, 400);
-  } else {
-    next();
-  }
-};
+const { isLoggedIn, isAuthor, validateCampground } = require("../middleware");
 
 router.get(
   "/",
@@ -34,6 +23,7 @@ router.post(
   validateCampground,
   catchAsync(async (req, res, next) => {
     const campground = new CampGround(req.body.campground);
+    campground.author = req.user._id;
     await campground.save();
     req.flash("success", "You have created a new campground");
     res.redirect(`/campGround/${campground._id}`);
@@ -44,10 +34,17 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await CampGround.findById(id).populate("reviews");
+    const campground = await CampGround.findById(id)
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("author");
     if (!campground) {
       req.flash("error", "Couldn't find campground");
-      res.redirect("/campGround");
+      return res.redirect("/campGround");
     }
     res.render("campground/show", { campground });
   })
@@ -56,6 +53,7 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await CampGround.findById(id);
@@ -65,8 +63,9 @@ router.get(
 
 router.put(
   "/:id",
-  validateCampground,
   isLoggedIn,
+  isAuthor,
+  validateCampground,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await CampGround.findByIdAndUpdate(id, {
