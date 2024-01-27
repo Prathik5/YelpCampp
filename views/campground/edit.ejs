@@ -8,7 +8,9 @@
       method="POST"
       novalidate
       class="validation-form"
+      enctype="multipart/form-data"
     >
+      <!-- *This is the title of the campground -->
       <div class="my-2">
         <label class="form-label" for="title">Enter Title</label>
         <input
@@ -22,6 +24,7 @@
         />
         <div class="valid-feedback">Looks Good!!</div>
       </div>
+      <!-- *Section for the price of the campground -->
       <div class="my-2">
         <label class="form-label" for="price">Price</label>
         <div class="input-group">
@@ -39,6 +42,7 @@
           <div class="valid-feedback">Looks Good!!</div>
         </div>
       </div>
+      <!-- *Section for the location of the campground -->
       <div class="my-2">
         <label class="form-label" for="location">Enter Location</label>
         <input
@@ -52,19 +56,13 @@
         />
         <div class="valid-feedback">Looks Good!!</div>
       </div>
+      <!-- *Section for uploading the image -->
       <div class="my-2">
-        <label class="form-label" for="image">Image URL</label>
-        <input
-          class="form-control"
-          type="text"
-          name="campground[image]"
-          id="image"
-          placeholder="Enter the URL"
-          value="<%= campground.image %>"
-          required
-        />
-        <div class="valid-feedback">Looks Good!!</div>
+        <label class="form-label" for="image">Add Images</label>
+        <input type="file" name="image" id="image" multiple />
+        <!-- <div class="valid-feedback">Looks Good!!</div> -->
       </div>
+      <!-- *Section for Description of the campground -->
       <div class="my-2">
         <label class="form-label" for="description">Description</label>
         <textarea
